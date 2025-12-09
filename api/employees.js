@@ -9,8 +9,8 @@ import {
 
 const router = express.Router();
 
-function isPositiveIntString(s) {
-  return /^\d+$/.test(s) && Number(s) > 0;
+function isIntegerString(s) {
+  return /^\d+$/.test(s);
 }
 
 router.get("/", async (req, res) => {
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  if (!isPositiveIntString(id)) return res.status(400).send();
+  if (!isIntegerString(id)) return res.status(400).send();
   try {
     const row = await getEmployee(id);
     if (!row) return res.status(404).send();
@@ -52,7 +52,7 @@ router.get("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  if (!isPositiveIntString(id)) return res.status(400).send();
+  if (!isIntegerString(id)) return res.status(400).send();
   try {
     const deleted = await deleteEmployee(id);
     if (!deleted) return res.status(404).send();
@@ -69,7 +69,7 @@ router.put("/:id", async (req, res) => {
   const { name, birthday, salary } = req.body;
   if (!name || !birthday || typeof salary !== "number")
     return res.status(400).send();
-  if (!isPositiveIntString(id)) return res.status(400).send();
+  if (!isIntegerString(id)) return res.status(400).send();
   try {
     const updated = await updateEmployee({ id, name, birthday, salary });
     if (!updated) return res.status(404).send();
