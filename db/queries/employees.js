@@ -57,5 +57,11 @@ export async function updateEmployee({ id, name, birthday, salary }) {
  * @returns undefined if employee with the given id does not exist
  */
 export async function deleteEmployee(id) {
-  // TODO
+  const sql = `
+  DELETE FROM employees
+  WHERE id = $1
+  RETURNING *
+  `;
+  const { rows } = await db.query(sql, [id]);
+  return rows[0];
 }
