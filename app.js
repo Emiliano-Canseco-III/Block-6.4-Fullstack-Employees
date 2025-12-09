@@ -2,6 +2,7 @@ import express from "express";
 import employeesRouter from "./api/employees.js";
 
 const app = express();
+const router = express.Router();
 app.use(express.json());
 
 // Root route for testing server availability
